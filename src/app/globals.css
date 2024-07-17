@@ -1,0 +1,68 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import '@fortawesome/fontawesome-svg-core/styles.css';
+
+
+::-webkit-input-placeholder {
+  font-size: 14px;
+}
+
+:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  font-size: 14px;
+}
+
+::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  font-size: 14px;
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10+ */
+  font-size: 14px;
+}
+
+input:focus-visible {
+  outline: -webkit-focus-ring-color auto 0px;
+}
+
+.query-action {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+}
+
+.query-action input {
+  border: 0.1px solid gray;
+  border-right: none;
+  padding: 12px;
+  padding-left: 15px;
+  border-radius: 50px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+.query-action .submit {
+  width: 50px;
+  cursor: pointer;
+  border: 0.1px solid gray;
+  border-left: none;
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
+}
+
+.conv .leftMsg,
+.conv .rightMsg {
+  padding: 10px 20px;
+  color: #fff;
+  font-size: small;
+  margin-top: 15px;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.conv .rightMsg {
+  float: right;
+}
