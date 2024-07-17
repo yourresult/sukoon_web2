@@ -2,7 +2,7 @@
 import { config } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 config.autoAddCss = false;
 
@@ -14,7 +14,8 @@ config.autoAddCss = false;
 export default function Home() {
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState('');
-  
+  const messagesEndRef = useRef(null);
+
   const newMessage = {
     type: 'user',
     // text: inputValue,
@@ -36,6 +37,7 @@ export default function Home() {
 
     // Add new message to local state immediately
     setMessages(prevMessages => [...prevMessages, newMessage]);
+    scrollToBottom();
     setInputValue(''); // Clear input field
 
     try {
@@ -54,6 +56,7 @@ export default function Home() {
       const data = await response.json();
       resMessage.data = data;
       setMessages(prevMessages => [...prevMessages, { ...resMessage, data }]);
+      scrollToBottom();
       // console.log('Server response:', data);
     } catch (error) {
       // console.error('Error adding message:', error);
@@ -63,12 +66,19 @@ export default function Home() {
   const handleChange = (event) => {
     setInputValue(event.target.value);
   };
+
+  const scrollToBottom = () => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   console.log(messages)
 
   return (
     <main>
       {/* Conversatation / Messages */}
-      <div className="conv">
+      <div className="conv" id="conv">
         <div className="container w-50 pt-5">
           {messages.map((message, index) => (
             <div key={index}>
@@ -78,19 +88,22 @@ export default function Home() {
               </div>
             </div>
           ))}
+          <div ref={messagesEndRef} style={{marginBottom: "10px"}}> Hii vivek </div>
           <br />
         </div>
       </div>
       {/* Query Input */}
-      <div className="row w-50 mx-auto query-action">
-        <div className="input-group mb-3">
-          <div className="form-floating">
-            <input type="text" className="w-100 h-100" id="floatingInputGroup1" value={inputValue} placeholder="Write your query" onChange={handleChange} />
+      <form onSubmit={handleSubmit}>
+        <div className="row w-50 mx-auto query-action">
+          <div className="input-group mb-3">
+            <div className="form-floating">
+              <input type="text" className="w-100 h-100" id="floatingInputGroup1" value={inputValue} placeholder="Write your query" onChange={handleChange} />
+            </div>
+            <span className="input-group-text d-flex justify-content-center submit" onClick={handleSubmit}><i
+              className="fa-solid fa-arrow-up"></i><FontAwesomeIcon icon={faArrowUp} /></span>
           </div>
-          <span className="input-group-text d-flex justify-content-center submit" onClick={handleSubmit}><i
-            className="fa-solid fa-arrow-up"></i><FontAwesomeIcon icon={faArrowUp} /></span>
         </div>
-      </div>
+      </form>
     </main >
   );
 }
